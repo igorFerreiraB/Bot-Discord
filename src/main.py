@@ -9,23 +9,22 @@ class MyClient(discord.Client):
         print(f'Message from {message.author}: {message.content}')
         if message.content.startswith('$hello'):
             await message.channel.send('Hello!')
-        if message.content.startswith('?regras'):
+        elif message.content.startswith('?regras'):
             await message.channel.send(
                 f"{message.author.name}{os.linesep}\
-                1. É proibido usar sapatos de cores diferentes em dias pares.{os.linesep}\
-                2. Todo mundo deve usar um chapéu de abacaxi às segundas-feiras.{os.linesep}\
-                3. É ilegal falar com esquilos em voz alta.{os.linesep}\
-                4. Todos os sanduíches devem ser comidos de trás para frente às quartas-feiras.{os.linesep}\
-                5. Os elevadores só podem ser usados por pessoas que estejam cantando uma música de karaokê.{os.linesep}\
-                6. É obrigatório andar de costas em calçadas ímpares.{os.linesep}\
-                7. Deve-se dar um aperto de mão a todos os cães que encontrar na rua.{os.linesep}\
-                8. É ilegal usar guarda-chuvas em dias de sol.{os.linesep}\
-                9. É proibido contar piadas às quintas-feiras.{os.linesep}\
-                10. Todo mundo deve usar uma gravata borboleta em forma de pena aos domingos."
+                \n1. É proibido usar sapatos de cores diferentes em dias pares.\
+                \n2. Todo mundo deve usar um chapéu de abacaxi às segundas-feiras.\
+                \n3. É ilegal falar com esquilos em voz alta.\
+                \n4. Todos os sanduíches devem ser comidos de trás para frente às quartas-feiras.\
+                \n5. Os elevadores só podem ser usados por pessoas que estejam cantando uma música de karaokê.\
+                \n6. É obrigatório andar de costas em calçadas ímpares.\
+                \n7. Deve-se dar um aperto de mão a todos os cães que encontrar na rua.\
+                \n8. É ilegal usar guarda-chuvas em dias de sol.\
+                \n9. É proibido contar piadas às quintas-feiras.\
+                \n10. Todo mundo deve usar uma gravata borboleta em forma de pena aos domingos."
             )
-
 intents = discord.Intents.default()
 intents.message_content = True
 
 client = MyClient(intents=intents)
-client.run('')
+client.run('MTEwNzQwMjE2OTYzNzk0OTU1MA.GWgu5_.UV7B7e3xsx3BL7TFL40XW6_CLzjbugDC6kOJyM')
