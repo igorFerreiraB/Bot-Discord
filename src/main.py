@@ -1,8 +1,5 @@
 import discord
 import os
-from key import token
-
-
 
 class MyClient(discord.Client):
 
@@ -12,10 +9,10 @@ class MyClient(discord.Client):
     async def on_message(self, message):
         print(f'Message from {message.author}: {message.content}')
         if message.content == ('$ola'):
-            await message.channel.send('olá!')
+            await message.channel.send(f'{message.author.mention}{os.linesep}Olá!, Como vai ?')
         elif message.content == ('?regras'):
             await message.channel.send(
-                f"{message.author.mention.name}{os.linesep}\
+                f"{message.author.mention}{os.linesep}\
                 \n1. É proibido usar sapatos de cores diferentes em dias pares.\
                 \n2. Todo mundo deve usar um chapéu de abacaxi às segundas-feiras.\
                 \n3. É ilegal falar com esquilos em voz alta.\
@@ -28,7 +25,16 @@ class MyClient(discord.Client):
                 \n10. Todo mundo deve usar uma gravata borboleta em forma de pena aos domingos."
             )
         elif message.content == ('?nivel'):
-            await message.author.send("Nivel menininha")
+            await message.author.send(f"{message.author.mention}{os.linesep}Nivel menininha")
+        elif message.content == ('?help'):
+            await message.channel.send(
+                f"{message.author.mention}{os.linesep}\
+                \nAqui estão todos os meus comandos:\
+                \n?regras: Você vera as regras importantíssimas do server\
+                \n$ola: Vou te dar um olá\
+                \n?nivel: Vou te mostrar o quão grande você é\
+                \n?help: Você vera oque eu posso fazer"
+            )
 
     async def member_join(self, member):
         guild = member.guild
@@ -36,9 +42,8 @@ class MyClient(discord.Client):
             mensagem = f"{member.mention} Acabou de entrar no {guild.name}"
             await guild.system_channel.send(mensagem)
 
-# TOKEN = token.get("TOKEN")
-intents = discord.Intents.all()
+intents = discord.Intents.default()
 intents.message_content = True
 
 client = MyClient(intents=intents)
-client.run("")
+client.run('')
