@@ -1,5 +1,8 @@
 import discord
 import os
+import logging
+from dotenv import load_dotenv
+load_dotenv()
 
 class MyClient(discord.Client):
 
@@ -9,7 +12,7 @@ class MyClient(discord.Client):
     async def on_message(self, message):
         print(f'Message from {message.author}: {message.content}')
         if message.content == ('$ola'):
-            await message.channel.send(f'{message.author.mention}{os.linesep}Olá!, Como vai ?')
+            await message.channel.send(f'Olá! {message.author.mention}, Como vai ?')
         elif message.content == ('?regras'):
             await message.channel.send(
                 f"{message.author.mention}{os.linesep}\
@@ -36,7 +39,7 @@ class MyClient(discord.Client):
                 \n?help: Você vera oque eu posso fazer"
             )
 
-    async def member_join(self, member):
+    async def on_member_join(self, member):
         guild = member.guild
         if guild.system_channel is not None:
             mensagem = f"{member.mention} Acabou de entrar no {guild.name}"
@@ -44,6 +47,8 @@ class MyClient(discord.Client):
 
 intents = discord.Intents.default()
 intents.message_content = True
+intents.members = True
 
 client = MyClient(intents=intents)
-client.run('')
+handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
+client.run(os.environ['token'], log_handler=handler)
