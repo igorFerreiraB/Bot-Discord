@@ -1,8 +1,14 @@
 import discord
 import os
 import logging
+from discord.ext import commands
 from dotenv import load_dotenv
 load_dotenv()
+
+intents = discord.Intents.default()
+intents.message_content = True
+intents.members = True
+bot = commands.Bot(command_prefix='$', intents=intents)
 
 class MyClient(discord.Client):
 
@@ -44,10 +50,6 @@ class MyClient(discord.Client):
         if guild.system_channel is not None:
             mensagem = f"{member.mention} Acabou de entrar no {guild.name}"
             await guild.system_channel.send(mensagem)
-
-intents = discord.Intents.default()
-intents.message_content = True
-intents.members = True
 
 client = MyClient(intents=intents)
 handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
