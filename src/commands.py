@@ -1,5 +1,6 @@
 from typing import Optional
 
+import main
 import logging
 import os
 import discord
@@ -96,20 +97,15 @@ async def joined(interaction: discord.Interaction, member: Optional[discord.Memb
 
     await interaction.response.send_message(f'{member.mention} entrou no dia {discord.utils.format_dt(member.joined_at)}')
 
-
-# A Context Menu command is an app command that can be run on a member or on a message by
-# accessing a menu within the client, usually via right clicking.
-# It always takes an interaction as its first parameter and a Member or Message as its second parameter.
-
 # This context menu command only works on members
-@client.tree.context_menu(name='Show Join Date')
+@client.tree.context_menu(name='Data que entrou')
 async def show_join_date(interaction: discord.Interaction, member: discord.Member):
     # The format_dt function formats the date time into a human readable representation in the official client
-    await interaction.response.send_message(f'{member} joined at {discord.utils.format_dt(member.joined_at)}')
+    await interaction.response.send_message(f'{member.mention} está conosco desde o dia {discord.utils.format_dt(member.joined_at)}')
 
 
-# This context menu command only works on messages
-@client.tree.context_menu(name='Report to Moderators')
+
+@client.tree.context_menu(name='Reportar está menssagem')
 async def report_message(interaction: discord.Interaction, message: discord.Message):
     # We're sending this response message with ephemeral=True, so only the command executor can see it
     await interaction.response.send_message(
@@ -119,7 +115,7 @@ async def report_message(interaction: discord.Interaction, message: discord.Mess
     # Handle report by sending it into a log channel
     log_channel = interaction.guild.get_channel(0)  # replace with your channel id
 
-    embed = discord.Embed(title='Reported Message')
+    embed = discord.Embed(title='Reportar está menssagem')
     if message.content:
         embed.description = message.content
 
@@ -127,7 +123,7 @@ async def report_message(interaction: discord.Interaction, message: discord.Mess
     embed.timestamp = message.created_at
 
     url_view = discord.ui.View()
-    url_view.add_item(discord.ui.Button(label='Go to Message', style=discord.ButtonStyle.url, url=message.jump_url))
+    url_view.add_item(discord.ui.Button(label='ir para a menssagem', style=discord.ButtonStyle.url, url=message.jump_url))
 
     await log_channel.send(embed=embed, view=url_view)
 
