@@ -1,6 +1,6 @@
 from typing import Optional
 
-import main
+from main import *
 import logging
 import os
 import discord
@@ -25,6 +25,8 @@ class MyClient(discord.Client):
 intents = discord.Intents.default()
 client = MyClient(intents=intents)
 
+on_message()
+on_member_join()
 
 @client.event
 async def on_ready():
