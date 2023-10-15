@@ -57,7 +57,7 @@ client.run(os.environ['token'], log_handler=handler)
 
 
 
-
+'''
 async def on_message(self, message):
     print(f'Message from {message.author}: {message.content}')
     if message.content == ('$ola'):
@@ -92,4 +92,4 @@ async def on_member_join(self, member):
     guild = member.guild
     if guild.system_channel is not None:
         mensagem = f"{member.mention} Acabou de entrar no {guild.name}"
-        await guild.system_channel.send(mensagem)
+        await guild.system_channel.send(mensagem)'''

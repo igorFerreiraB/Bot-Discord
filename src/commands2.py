@@ -1,6 +1,6 @@
 from typing import Optional
 
-from main import *
+from commands import hello
 import logging
 import os
 import discord
@@ -8,9 +8,12 @@ from discord import app_commands
 from dotenv import load_dotenv
 load_dotenv()
 
-
 MY_GUILD = discord.Object(id=1034181969409474682)
 
+intents = discord.Intents.default()
+intents.message_content = True
+intents.members = True
+handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
 
 class MyClient(discord.Client):
     def __init__(self, *, intents: discord.Intents):
@@ -21,7 +24,6 @@ class MyClient(discord.Client):
         self.tree.copy_global_to(guild=MY_GUILD)
         await self.tree.sync(guild=MY_GUILD)
 
-intents = discord.Intents.default()
 client = MyClient(intents=intents)
 
 @client.event
@@ -30,49 +32,56 @@ async def on_ready():
     print(f'Acabou de entrar {client.user} (ID: {client.user.id})')
     print('-' * 60)
 
-@client.tree.command()
-async def hello(interaction: discord.Interaction):
-    await interaction.response.send_message(f'Olá, {interaction.user.mention}')
 
-@client.tree.command()
-@app_commands.describe(
-    primeiro_número='Você vai passar  valor para somar, subtrair, multiplicar, ou dividir',
-    segundo_número='Você vai passar outro valor para somar, subtrair, multiplicar, ou dividir',
-)
-async def somar(interaction: discord.Interaction, primeiro_número: float, segundo_número: float):
-    await interaction.response.send_message(
-        f'{primeiro_número} + {segundo_número} = {primeiro_número + segundo_número}'
-        )
-    
-@client.tree.command()
-@app_commands.describe(
-    primeiro_número='Você vai passar  valor para somar, subtrair, multiplicar, ou dividir',
-    segundo_número='Você vai passar outro valor para somar, subtrair, multiplicar, ou dividir',
-)
-async def subtrair(interaction: discord.Interaction, primeiro_número: float, segundo_número: float):
-    await interaction.response.send_message(
-        f'{primeiro_número} - {segundo_número} = {primeiro_número - segundo_número}'
-        )    
+hello()
 
-@client.tree.command()
-@app_commands.describe(
-    primeiro_número='Você vai passar  valor para somar, subtrair, multiplicar, ou dividir',
-    segundo_número='Você vai passar outro valor para somar, subtrair, multiplicar, ou dividir',
-)
-async def multiplicar(interaction: discord.Interaction, primeiro_número: float, segundo_número: float):
-    await interaction.response.send_message(
-        f'{primeiro_número} * {segundo_número} = {primeiro_número * segundo_número}'
-        )
+'''ESTÃO EM OUTRA AREA'''
+
+# @client.tree.command()
+# async def hello(interaction: discord.Interaction):
+#     await interaction.response.send_message(f'Olá, {interaction.user.mention}')
+
+'''ESTÃO EM OUTRA AREA'''
+
+# @client.tree.command()
+# @app_commands.describe(
+#     primeiro_número='Você vai passar  valor para somar, subtrair, multiplicar, ou dividir',
+#     segundo_número='Você vai passar outro valor para somar, subtrair, multiplicar, ou dividir',
+# )
+# async def somar(interaction: discord.Interaction, primeiro_número: float, segundo_número: float):
+#     await interaction.response.send_message(
+#         f'{primeiro_número} + {segundo_número} = {primeiro_número + segundo_número}'
+#         )
     
-@client.tree.command()
-@app_commands.describe(
-    primeiro_número='Você vai passar valor para somar, subtrair, multiplicar, ou dividir',
-    segundo_número='Você vai passar outro valor para somar, subtrair, multiplicar, ou dividir',
-) 
-async def dividir(interaction: discord.Interaction, primeiro_número: float, segundo_número: float):
-    await interaction.response.send_message(
-        f'{primeiro_número} / {segundo_número} = {primeiro_número / segundo_número}'
-        )
+# @client.tree.command()
+# @app_commands.describe(
+#     primeiro_número='Você vai passar  valor para somar, subtrair, multiplicar, ou dividir',
+#     segundo_número='Você vai passar outro valor para somar, subtrair, multiplicar, ou dividir',
+# )
+# async def subtrair(interaction: discord.Interaction, primeiro_número: float, segundo_número: float):
+#     await interaction.response.send_message(
+#         f'{primeiro_número} - {segundo_número} = {primeiro_número - segundo_número}'
+#         )    
+
+# @client.tree.command()
+# @app_commands.describe(
+#     primeiro_número='Você vai passar  valor para somar, subtrair, multiplicar, ou dividir',
+#     segundo_número='Você vai passar outro valor para somar, subtrair, multiplicar, ou dividir',
+# )
+# async def multiplicar(interaction: discord.Interaction, primeiro_número: float, segundo_número: float):
+#     await interaction.response.send_message(
+#         f'{primeiro_número} * {segundo_número} = {primeiro_número * segundo_número}'
+#         )
+    
+# @client.tree.command()
+# @app_commands.describe(
+#     primeiro_número='Você vai passar valor para somar, subtrair, multiplicar, ou dividir',
+#     segundo_número='Você vai passar outro valor para somar, subtrair, multiplicar, ou dividir',
+# ) 
+# async def dividir(interaction: discord.Interaction, primeiro_número: float, segundo_número: float):
+#     await interaction.response.send_message(
+#         f'{primeiro_número} / {segundo_número} = {primeiro_número / segundo_número}'
+#         )
 
 @client.tree.command()
 @app_commands.rename(text_to_send='text')
@@ -109,6 +118,10 @@ async def report_message(interaction: discord.Interaction, message: discord.Mess
     url_view.add_item(discord.ui.Button(label='ir para a menssagem', style=discord.ButtonStyle.url, url=message.jump_url))
 
     await log_channel.send(embed=embed, view=url_view)
+
+
+client.run(os.environ['token'], log_handler=handler)
+
 
 # async def on_message(self, message):
 #     print(f'Message from {message.author}: {message.content}')
