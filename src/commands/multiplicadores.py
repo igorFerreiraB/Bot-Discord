@@ -9,7 +9,7 @@ bot = commands.Bot(command_prefix='$', intents=intents)
 
 @commands.command()
 @app_commands.describe(
-    primeiro_número='Você vai passar  valor para somar, subtrair, multiplicar, ou dividir',
+    primeiro_número='Você vai passar um valor para somar, subtrair, multiplicar, ou dividir',
     segundo_número='Você vai passar outro valor para somar, subtrair, multiplicar, ou dividir',
 )
 async def somar(interaction: discord.Interaction, primeiro_número: float, segundo_número: float):

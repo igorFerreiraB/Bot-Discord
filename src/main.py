@@ -4,7 +4,7 @@ import logging
 import os
 import discord
 
-from commands import hello
+from .commands import _
 from discord import app_commands
 from dotenv import load_dotenv
 load_dotenv()
@@ -33,7 +33,7 @@ async def on_ready():
     print(f'Acabou de entrar {client.user} (ID: {client.user.id})')
     print('-' * 60)
 
-hello()
+test()
 
 @client.tree.command()
 @app_commands.describe(member='member')
