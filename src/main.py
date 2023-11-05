@@ -3,11 +3,11 @@ from typing import Optional
 import logging
 import os
 import discord
-
-from .commands import _
 from discord import app_commands
 from dotenv import load_dotenv
 load_dotenv()
+
+# from .commands import test
 
 MY_GUILD = discord.Object(id=1034181969409474682)
 
@@ -32,8 +32,6 @@ async def on_ready():
     print('-' * 60)
     print(f'Acabou de entrar {client.user} (ID: {client.user.id})')
     print('-' * 60)
-
-test()
 
 @client.tree.command()
 @app_commands.describe(member='member')
