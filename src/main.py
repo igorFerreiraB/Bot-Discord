@@ -3,23 +3,26 @@ from typing import Optional
 import logging
 import os
 import discord
+
+# from .commands import princ_command
+from discord.ext import commands
 from discord import app_commands
 from dotenv import load_dotenv
 load_dotenv()
-
-# from .commands import test
 
 MY_GUILD = discord.Object(id=1034181969409474682)
 
 intents = discord.Intents.default()
 intents.message_content = True
 intents.members = True
+bot = commands.Bot(command_prefix='!', intents=intents) 
 handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
+
 
 class MyClient(discord.Client):
     def __init__(self, *, intents: discord.Intents):
         super().__init__(intents=intents)
-        self.tree = app_commands.CommandTree(self)
+        self.tree = app_commands.CommandTree(self)  
 
     async def setup_hook(self):
         self.tree.copy_global_to(guild=MY_GUILD)
@@ -32,6 +35,9 @@ async def on_ready():
     print('-' * 60)
     print(f'Acabou de entrar {client.user} (ID: {client.user.id})')
     print('-' * 60)
+
+    bot.load_extension('commands.princ_command')
+    
 
 @client.tree.command()
 @app_commands.describe(member='member')
@@ -64,5 +70,6 @@ async def report_message(interaction: discord.Interaction, message: discord.Mess
     await log_channel.send(embed=embed, view=url_view) 
 
 
+# bot.run(os.environ['token'])
+# bot.run(config['token'])
 client.run(os.environ['token'],log_handler=handler)
-
