@@ -18,7 +18,6 @@ intents.members = True
 bot = commands.Bot(command_prefix='!', intents=intents) 
 handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
 
-
 class MyClient(discord.Client):
     def __init__(self, *, intents: discord.Intents):
         super().__init__(intents=intents)
@@ -72,4 +71,4 @@ async def report_message(interaction: discord.Interaction, message: discord.Mess
 
 # bot.run(os.environ['token'])
 # bot.run(config['token'])
-client.run(os.environ['token'],log_handler=handler)
+# client.run(os.environ['token'],log_handler=handler)
