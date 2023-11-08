@@ -8,11 +8,12 @@ load_dotenv()
 
 MY_GUILD = discord.Object(id=1034181969409474682)
 MY_SECRET_TOKEN = os.environ.get("token")
+prefix = "!"
 
 intents = discord.Intents.default()
 intents.message_content = True
 intents.members = True
-bot = commands.Bot(command_prefix='!', intents=intents)
+bot = commands.Bot(command_prefix=prefix, intents=intents)
 
 def sep(text):
     size = len(text) + 4
@@ -32,23 +33,11 @@ class MyClient(discord.Client):
     @bot.event
     async def on_ready():
         sep(f'Conectou-se {bot.user.name}')
-
         await bot.load_extension("commands.princ_command")
+        await bot.load_extension("utils.chat_bot")
         await bot.tree.sync()
-  
 
 client = MyClient(intents=intents)
-
-# @bot.event
-# async def on_ready():
-#     print("-" * 30)
-#     print(f'Logged in as {bot.user.name}')
-#     print("-" * 30)
-
-#     await bot.load_extension("commands.princ_command")
-#     await bot.tree.sync()
-
-#     print('All extensions loaded')
 
 if __name__ == '__main__':
     bot.run(MY_SECRET_TOKEN)
