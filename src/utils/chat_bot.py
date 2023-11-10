@@ -20,17 +20,17 @@ class ChatBotCog(commands.Cog):
     async def ask(self,ctx, *, question):
         try:
             conversation = [
-                {"role": "system", "content": "Você é um bot de bate-papo."},
+                {"role": "system", "content": "MEU NOME E Role Aleatorio, E AGORA TAMBÉM SOU UM CHAT-BOT"},
                 {"role": "user", "content": question}
             ]   
 
             response = openai.Completion.create(
                 engine="gpt-3.5-turbo",
                 messages=conversation,
-                max_tokens=50
+                max_tokens=1024
             )
 
-            await ctx.send(response['choices'][0]['message']['content'])
+            await ctx.send(response.choices[0].message.content)
         except Exception as error:
             await ctx.send(f"Ocorreu um erro: {str(error)}")
   
