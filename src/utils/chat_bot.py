@@ -16,16 +16,16 @@ class ChatBotCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
-    async def ask(self,ctx, *, question):
+    @bot.command()
+    async def ask(self, ctx, *, question):
         try:
             conversation = [
-                {"role": "system", "content": "MEU NOME E Role Aleatorio, E AGORA TAMBÉM SOU UM CHAT-BOT"},
-                {"role": "user", "content": question}
+                {"role": "user", "content": question},
+                {"role": "system", "content": "MEU NOME E Role Aleatorio, E AGORA TAMBÉM SOU UM CHAT-BOT"}
             ]   
 
             response = openai.Completion.create(
-                engine="gpt-3.5-turbo",
+                model="gpt-3.5-turbo",
                 messages=conversation,
                 max_tokens=1024
             )
