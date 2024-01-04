@@ -2,12 +2,12 @@ import discord
 from discord.ext import commands
 
 intents = discord.Intents.default()
-intents.message_content = True
+intents.messages = True
 intents.members = True
 prefix = "!"
 bot = commands.Bot(command_prefix=prefix, intents=intents)
 
-# ALL Discord Commands
+# Discord Commands
 class CommandCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -17,5 +17,5 @@ class CommandCog(commands.Cog):
         await ctx.send('Olá!')
         await ctx.send('Bom dia! / Boa tarde! / Boa noite!')   
 
-async def setup(bot):
-    await bot.add_cog(CommandCog(bot))  
+# async def setup(bot):
+#     await bot.add_cog(CommandCog(bot))  
