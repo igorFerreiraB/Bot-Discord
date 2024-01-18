@@ -14,6 +14,7 @@ intents.all()
 
 bot = commands.Bot(command_prefix=prefix, intents=intents)
 
+# Mostra linhas sobre o Bot que conectou
 def sep(text):
     size = len(text) + 4
     print("-" * size)

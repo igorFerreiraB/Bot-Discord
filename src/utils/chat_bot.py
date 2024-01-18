@@ -22,7 +22,7 @@ class ChatBotCog(commands.Cog):
             conversation = [
                 {"role": "user", "content": question},
                 {"role": "system", "content": "MEU NOME E Role Aleatorio, E AGORA TAMBÉM SOU UM CHAT-BOT"}
-            ]   
+            ]
 
             response = openai.Completion.create(
                 model="gpt-3.5-turbo",
